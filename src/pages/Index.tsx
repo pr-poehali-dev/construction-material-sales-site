@@ -75,6 +75,7 @@ const PRODUCTS: Product[] = [
   { id: 14, name: 'Прожектор LED 100W', category: 'Светильники', price: 2890, unit: 'шт', props: ['Влагостойкий', 'Морозостойкий'], icon: 'Lightbulb' },
   { id: 15, name: 'Керамогранит 600x600 матовый', category: 'Керамогранит', price: 890, unit: 'м²', props: ['Морозостойкий', 'Влагостойкий', 'Сертифицирован'], icon: 'Square' },
   { id: 16, name: 'Керамогранит 1200x600 полир.', category: 'Керамогранит', price: 1650, unit: 'м²', props: ['Влагостойкий', 'Сертифицирован'], icon: 'Square' },
+  { id: 25, name: 'Любой цвет под заказ', category: 'Керамогранит', price: 0, unit: 'м²', props: ['Морозостойкий', 'Влагостойкий', 'Сертифицирован'], icon: 'Palette' },
   { id: 17, name: 'Лифт пассажирский 1000 кг', category: 'Лифты', price: 1250000, unit: 'шт', props: ['Сертифицирован'], icon: 'ArrowUpDown' },
   { id: 18, name: 'Лифт грузовой 2000 кг', category: 'Лифты', price: 1850000, unit: 'шт', props: ['Сертифицирован', 'Огнеупорный'], icon: 'ArrowUpDown' },
   { id: 19, name: 'Кодовый замок электронный', category: 'Кодовые замки', price: 8900, unit: 'шт', props: ['Влагостойкий', 'Сертифицирован'], icon: 'KeyRound' },
@@ -263,7 +264,7 @@ const Index = () => {
               ) : (
                 <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                   {filtered.map((p) => (
-                    <div key={p.id} className="hover-lift group flex flex-col border border-border bg-card animate-scale-in">
+                    <div key={p.id} className={`hover-lift group flex flex-col border bg-card animate-scale-in ${p.name === 'Любой цвет под заказ' ? 'border-primary/60' : 'border-border'}`}>
                       <div className="relative h-44 overflow-hidden border-b border-border bg-secondary/40">
                         {CAT_IMAGES[p.category] ? (
                           <img
@@ -290,6 +291,9 @@ const Index = () => {
                             </span>
                           ))}
                         </div>
+                        {p.name === 'Любой цвет под заказ' && (
+                          <p className="mt-2 text-sm text-muted-foreground">Изготовим керамогранит любого цвета под ваш проект</p>
+                        )}
                         <div className="mt-auto pt-5">
                           <Button variant="secondary" className="w-full hover:bg-primary hover:text-primary-foreground font-display uppercase tracking-wide text-sm">
                             <Icon name="Phone" size={16} className="mr-2" />
