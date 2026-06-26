@@ -119,7 +119,7 @@ const Index = () => {
             <div className="flex h-9 w-9 items-center justify-center bg-primary text-primary-foreground">
               <Icon name="Hammer" size={20} />
             </div>
-            <span className="font-display text-xl font-bold tracking-wider">СТРОЙБАЗА</span>
+            <span className="font-display text-xl font-bold tracking-wider">УНИСТРОЙ МАРКЕТ</span>
           </button>
           <nav className="hidden items-center gap-1 md:flex">
             {NAV.map((n) => (
@@ -336,7 +336,7 @@ const Index = () => {
           <div>
             <SectionTitle num="03" title="О компании" subtitle="" />
             <p className="mt-6 text-lg text-muted-foreground">
-              «Стройбаза» — поставщик строительных материалов с 2013 года. Мы работаем напрямую с заводами-производителями, что гарантирует честную цену и стабильное качество.
+              «Унистрой Маркет» — поставщик строительных материалов с 2013 года. Мы работаем напрямую с заводами-производителями, что гарантирует честную цену и стабильное качество.
             </p>
             <p className="mt-4 text-muted-foreground">
               Собственные склады, лаборатория контроля качества и команда инженеров помогут подобрать материалы под любой проект — от частного дома до промышленного объекта.
@@ -417,9 +417,9 @@ const Index = () => {
             <div className="flex h-8 w-8 items-center justify-center bg-primary text-primary-foreground">
               <Icon name="Hammer" size={16} />
             </div>
-            <span className="font-display text-lg tracking-wider">СТРОЙБАЗА</span>
+            <span className="font-display text-lg tracking-wider">УНИСТРОЙ МАРКЕТ</span>
           </div>
-          <p className="text-sm text-muted-foreground">© 2026 Стройбаза. Строительные материалы оптом и в розницу.</p>
+          <p className="text-sm text-muted-foreground">© 2026 Унистрой Маркет. Строительные материалы оптом и в розницу.</p>
         </div>
       </footer>
     </div>
