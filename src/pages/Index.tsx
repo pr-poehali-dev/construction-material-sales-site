@@ -378,7 +378,7 @@ const Index = () => {
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {[
               { icon: 'Phone', t: 'Телефон', v: '+7 (800) 555-35-35', s: 'Звонок бесплатный' },
-              { icon: 'Mail', t: 'Почта', v: 'zakaz@stroybaza.ru', s: 'Ответим в течение часа' },
+              { icon: 'Mail', t: 'Почта', v: 'gz.osmanova@unistroyrf.ru', s: 'Ответим в течение часа' },
               { icon: 'MapPin', t: 'Адрес', v: 'г. Москва, Промзона 4', s: 'Пн–Сб 8:00–20:00' },
             ].map((c) => (
               <div key={c.t} className="border border-border bg-background p-8 hover-lift">
