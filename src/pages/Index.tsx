@@ -389,15 +389,23 @@ const Index = () => {
               </div>
             ))}
           </div>
-          <div className="mt-8 flex flex-col items-center justify-between gap-6 border border-primary/40 bg-primary/5 p-10 text-center md:flex-row md:text-left">
-            <div>
-              <h3 className="font-display text-2xl uppercase tracking-wide">Нужна консультация?</h3>
-              <p className="mt-2 text-muted-foreground">Оставьте заявку — менеджер рассчитает стоимость и подберёт материалы.</p>
+          <div className="mt-8 flex flex-col items-center justify-between gap-8 border border-primary/40 bg-primary/5 p-10 md:flex-row">
+            <div className="flex items-center gap-6">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center bg-primary text-primary-foreground">
+                <Icon name="UserRound" size={32} />
+              </div>
+              <div>
+                <p className="text-sm uppercase tracking-widest text-muted-foreground font-display">Ваш специалист</p>
+                <h3 className="font-display text-2xl font-bold">Османова Гульнур</h3>
+                <p className="mt-1 text-muted-foreground">Подберёт материалы под ваш проект и рассчитает стоимость</p>
+              </div>
             </div>
-            <Button size="lg" className="font-display text-base uppercase tracking-wide">
-              <Icon name="Send" size={18} className="mr-2" />
-              Оставить заявку
-            </Button>
+            <a href="tel:+79655936359">
+              <Button size="lg" className="font-display text-base uppercase tracking-wide whitespace-nowrap">
+                <Icon name="Phone" size={18} className="mr-2" />
+                +7 965 593-63-59
+              </Button>
+            </a>
           </div>
         </div>
       </section>
