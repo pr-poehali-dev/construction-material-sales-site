@@ -42,7 +42,7 @@ const CAT_IMAGES: Record<string, string> = {
   'Электрика и лотки': BASE + 'dd7dc330-a0f7-4070-9784-79d38de00bd5.jpg',
   'Светильники': BASE + 'e3963edb-4a76-4d48-a955-fb2cd510c7ab.jpg',
   'Керамогранит': BASE + '4e9782b3-086a-490b-af8b-e58f2aed7dcf.jpg',
-  'Лифты': BASE + 'c802ff0f-01de-4b74-89a9-dfdde6220cd6.jpg',
+  'Лифты': BASE + 'bac31341-3c9b-4bdc-8ea3-648121baa5b3.jpg',
   'Кодовые замки': BASE + '00ddee7e-3697-4428-ac56-1753deba2e60.jpg',
   'Радиаторы': BASE + 'f11bfacc-b33d-4a24-9b26-8dc510e6f22e.jpg',
 
