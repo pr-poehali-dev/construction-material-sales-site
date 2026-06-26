@@ -1,17 +1,376 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useMemo } from 'react';
+import Icon from '@/components/ui/icon';
+import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
+import { Checkbox } from '@/components/ui/checkbox';
+
+const HERO_IMG =
+  'https://cdn.poehali.dev/projects/18457ce4-e852-4f5b-a062-6751e611250a/files/c94a9495-8f12-4ac2-844e-e08c1f30b2be.jpg';
+
+const NAV = [
+  { id: 'home', label: 'Главная' },
+  { id: 'catalog', label: 'Каталог' },
+  { id: 'delivery', label: 'Доставка' },
+  { id: 'about', label: 'О компании' },
+  { id: 'contacts', label: 'Контакты' },
+];
+
+const CATEGORIES = ['Все', 'Цемент и смеси', 'Кирпич и блоки', 'Металлопрокат', 'Изоляция', 'Кровля'];
+const PROPERTIES = ['Морозостойкий', 'Влагостойкий', 'Огнеупорный', 'Сертифицирован'];
+
+type Product = {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  unit: string;
+  props: string[];
+  icon: string;
+};
+
+const PRODUCTS: Product[] = [
+  { id: 1, name: 'Цемент ПЦ-500 Д0', category: 'Цемент и смеси', price: 420, unit: 'мешок 50 кг', props: ['Морозостойкий', 'Сертифицирован'], icon: 'Package' },
+  { id: 2, name: 'Кирпич облицовочный М-150', category: 'Кирпич и блоки', price: 28, unit: 'шт', props: ['Морозостойкий', 'Влагостойкий'], icon: 'Grid3x3' },
+  { id: 3, name: 'Арматура А500С Ø12', category: 'Металлопрокат', price: 68000, unit: 'тонна', props: ['Сертифицирован'], icon: 'Minus' },
+  { id: 4, name: 'Газобетонный блок D500', category: 'Кирпич и блоки', price: 4200, unit: 'м³', props: ['Огнеупорный', 'Морозостойкий'], icon: 'Box' },
+  { id: 5, name: 'Минеральная вата 100мм', category: 'Изоляция', price: 1350, unit: 'упаковка', props: ['Огнеупорный', 'Влагостойкий'], icon: 'Layers' },
+  { id: 6, name: 'Профнастил С-21 оцинк.', category: 'Кровля', price: 690, unit: 'м²', props: ['Влагостойкий', 'Сертифицирован'], icon: 'AlignJustify' },
+  { id: 7, name: 'Сухая смесь М-150', category: 'Цемент и смеси', price: 280, unit: 'мешок 25 кг', props: ['Морозостойкий'], icon: 'Package' },
+  { id: 8, name: 'Швеллер стальной 10П', category: 'Металлопрокат', price: 72000, unit: 'тонна', props: ['Сертифицирован', 'Огнеупорный'], icon: 'Minus' },
+  { id: 9, name: 'Пеноплэкс 50мм', category: 'Изоляция', price: 1680, unit: 'упаковка', props: ['Влагостойкий', 'Морозостойкий'], icon: 'Layers' },
+];
 
 const Index = () => {
+  const [activeSection, setActiveSection] = useState('home');
+  const [category, setCategory] = useState('Все');
+  const [priceMax, setPriceMax] = useState(80000);
+  const [selectedProps, setSelectedProps] = useState<string[]>([]);
+
+  const toggleProp = (p: string) =>
+    setSelectedProps((prev) => (prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p]));
+
+  const filtered = useMemo(
+    () =>
+      PRODUCTS.filter((p) => {
+        const byCat = category === 'Все' || p.category === category;
+        const byPrice = p.price <= priceMax;
+        const byProps = selectedProps.every((sp) => p.props.includes(sp));
+        return byCat && byPrice && byProps;
+      }),
+    [category, priceMax, selectedProps]
+  );
+
+  const scrollTo = (id: string) => {
+    setActiveSection(id);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
-      </div>
-      <span className="absolute bottom-8 left-1/2 -translate-x-1/2 inline-block bg-[#FF6637] text-white text-sm px-4 py-2 rounded-full whitespace-nowrap">
-        Подождите 5 минут, Юра создает первую версию проекта с нуля
-      </span>
+    <div className="min-h-screen bg-background font-sans text-foreground">
+      {/* HEADER */}
+      <header className="fixed top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur-md">
+        <div className="container flex h-16 items-center justify-between">
+          <button onClick={() => scrollTo('home')} className="flex items-center gap-2">
+            <div className="flex h-9 w-9 items-center justify-center bg-primary text-primary-foreground">
+              <Icon name="Hammer" size={20} />
+            </div>
+            <span className="font-display text-xl font-bold tracking-wider">СТРОЙБАЗА</span>
+          </button>
+          <nav className="hidden items-center gap-1 md:flex">
+            {NAV.map((n) => (
+              <button
+                key={n.id}
+                onClick={() => scrollTo(n.id)}
+                className={`px-4 py-2 font-display text-sm uppercase tracking-wide transition-colors ${
+                  activeSection === n.id ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {n.label}
+              </button>
+            ))}
+          </nav>
+          <Button onClick={() => scrollTo('contacts')} className="hidden font-display uppercase tracking-wide sm:flex">
+            <Icon name="Phone" size={16} className="mr-2" />
+            Заказать
+          </Button>
+        </div>
+      </header>
+
+      {/* HERO */}
+      <section id="home" className="relative flex min-h-screen items-center overflow-hidden pt-16">
+        <div className="absolute inset-0">
+          <img src={HERO_IMG} alt="" className="h-full w-full object-cover opacity-40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/30" />
+          <div className="absolute inset-0 grid-texture opacity-30" />
+        </div>
+        <div className="container relative z-10">
+          <div className="max-w-3xl animate-fade-in">
+            <div className="mb-6 inline-flex items-center gap-2 border border-primary/40 bg-primary/10 px-4 py-1.5">
+              <span className="h-2 w-2 animate-pulse bg-primary" />
+              <span className="font-display text-xs uppercase tracking-[0.2em] text-primary">Поставки по всей России</span>
+            </div>
+            <h1 className="font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight md:text-7xl">
+              Строительные <br />
+              материалы <span className="text-gradient-orange">оптом</span> <br />
+              и в розницу
+            </h1>
+            <p className="mt-6 max-w-xl text-lg text-muted-foreground">
+              Цемент, металлопрокат, кирпич, изоляция и кровля. Прямые поставки с заводов, контроль качества и доставка точно в срок.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-4">
+              <Button size="lg" onClick={() => scrollTo('catalog')} className="font-display text-base uppercase tracking-wide">
+                Перейти в каталог
+                <Icon name="ArrowRight" size={18} className="ml-2" />
+              </Button>
+              <Button size="lg" variant="outline" onClick={() => scrollTo('delivery')} className="font-display text-base uppercase tracking-wide">
+                Условия доставки
+              </Button>
+            </div>
+            <div className="mt-14 grid max-w-lg grid-cols-3 gap-6">
+              {[
+                { v: '12 лет', l: 'на рынке' },
+                { v: '5 000+', l: 'позиций' },
+                { v: '24/7', l: 'отгрузка' },
+              ].map((s) => (
+                <div key={s.l} className="border-l-2 border-primary pl-4">
+                  <div className="font-display text-3xl font-bold">{s.v}</div>
+                  <div className="text-sm uppercase tracking-wide text-muted-foreground">{s.l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CATALOG */}
+      <section id="catalog" className="border-t border-border py-24">
+        <div className="container">
+          <SectionTitle num="01" title="Каталог" subtitle="Подберите материалы с помощью фильтров" />
+          <div className="mt-12 grid gap-8 lg:grid-cols-[280px_1fr]">
+            {/* FILTERS */}
+            <aside className="h-fit space-y-8 border border-border bg-card p-6 lg:sticky lg:top-24">
+              <div>
+                <h3 className="mb-4 font-display text-sm uppercase tracking-widest text-primary">Категория</h3>
+                <div className="space-y-1">
+                  {CATEGORIES.map((c) => (
+                    <button
+                      key={c}
+                      onClick={() => setCategory(c)}
+                      className={`block w-full text-left px-3 py-2 text-sm transition-colors ${
+                        category === c ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary'
+                      }`}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 font-display text-sm uppercase tracking-widest text-primary">Цена до</h3>
+                <Slider value={[priceMax]} onValueChange={(v) => setPriceMax(v[0])} max={80000} step={500} className="my-4" />
+                <div className="flex justify-between text-sm text-muted-foreground">
+                  <span>0 ₽</span>
+                  <span className="font-display text-foreground">{priceMax.toLocaleString('ru-RU')} ₽</span>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-4 font-display text-sm uppercase tracking-widest text-primary">Характеристики</h3>
+                <div className="space-y-3">
+                  {PROPERTIES.map((p) => (
+                    <label key={p} className="flex cursor-pointer items-center gap-3 text-sm">
+                      <Checkbox checked={selectedProps.includes(p)} onCheckedChange={() => toggleProp(p)} />
+                      {p}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <Button
+                variant="outline"
+                className="w-full font-display uppercase tracking-wide"
+                onClick={() => {
+                  setCategory('Все');
+                  setPriceMax(80000);
+                  setSelectedProps([]);
+                }}
+              >
+                <Icon name="RotateCcw" size={16} className="mr-2" />
+                Сбросить
+              </Button>
+            </aside>
+
+            {/* PRODUCTS */}
+            <div>
+              <div className="mb-6 flex items-center justify-between border-b border-border pb-4">
+                <span className="text-sm text-muted-foreground">
+                  Найдено: <span className="font-display text-foreground">{filtered.length}</span>
+                </span>
+                <span className="font-display text-sm uppercase tracking-wide text-muted-foreground">{category}</span>
+              </div>
+              {filtered.length === 0 ? (
+                <div className="flex flex-col items-center justify-center border border-dashed border-border py-24 text-muted-foreground">
+                  <Icon name="SearchX" size={40} />
+                  <p className="mt-4 font-display uppercase tracking-wide">Ничего не найдено</p>
+                </div>
+              ) : (
+                <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  {filtered.map((p) => (
+                    <div key={p.id} className="hover-lift group flex flex-col border border-border bg-card animate-scale-in">
+                      <div className="relative flex h-36 items-center justify-center border-b border-border bg-secondary/40">
+                        <Icon name={p.icon} size={48} className="text-muted-foreground transition-colors group-hover:text-primary" />
+                        <span className="absolute left-0 top-0 bg-primary px-2 py-1 font-display text-[10px] uppercase tracking-wider text-primary-foreground">
+                          {p.category}
+                        </span>
+                      </div>
+                      <div className="flex flex-1 flex-col p-5">
+                        <h4 className="font-display text-lg font-semibold leading-tight">{p.name}</h4>
+                        <div className="mt-3 flex flex-wrap gap-1.5">
+                          {p.props.map((pr) => (
+                            <span key={pr} className="border border-border px-2 py-0.5 text-[11px] text-muted-foreground">
+                              {pr}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="mt-auto flex items-end justify-between pt-5">
+                          <div>
+                            <div className="font-display text-2xl font-bold text-primary">{p.price.toLocaleString('ru-RU')} ₽</div>
+                            <div className="text-xs text-muted-foreground">за {p.unit}</div>
+                          </div>
+                          <Button size="icon" variant="secondary" className="hover:bg-primary hover:text-primary-foreground">
+                            <Icon name="ShoppingCart" size={18} />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DELIVERY */}
+      <section id="delivery" className="border-t border-border bg-card/40 py-24">
+        <div className="container">
+          <SectionTitle num="02" title="Доставка" subtitle="Привезём на объект быстро и аккуратно" />
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {[
+              { icon: 'Truck', t: 'Своя логистика', d: 'Парк манипуляторов и фур. Разгрузка на объекте включена в стоимость.' },
+              { icon: 'Clock', t: 'Точно в срок', d: 'Доставка день в день по городу и в течение 1–3 дней по регионам.' },
+              { icon: 'MapPin', t: 'Вся Россия', d: 'Отгрузка ж/д и автотранспортом в любой регион страны.' },
+            ].map((c) => (
+              <div key={c.t} className="border border-border bg-background p-8 hover-lift">
+                <div className="flex h-12 w-12 items-center justify-center bg-primary/10 text-primary">
+                  <Icon name={c.icon} size={24} />
+                </div>
+                <h4 className="mt-5 font-display text-xl uppercase tracking-wide">{c.t}</h4>
+                <p className="mt-3 text-muted-foreground">{c.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <section id="about" className="border-t border-border py-24">
+        <div className="container grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <SectionTitle num="03" title="О компании" subtitle="" />
+            <p className="mt-6 text-lg text-muted-foreground">
+              «Стройбаза» — поставщик строительных материалов с 2013 года. Мы работаем напрямую с заводами-производителями, что гарантирует честную цену и стабильное качество.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              Собственные склады, лаборатория контроля качества и команда инженеров помогут подобрать материалы под любой проект — от частного дома до промышленного объекта.
+            </p>
+            <div className="mt-8 grid grid-cols-2 gap-6">
+              {[
+                { icon: 'ShieldCheck', t: 'Гарантия качества' },
+                { icon: 'Receipt', t: 'Работаем с НДС' },
+                { icon: 'Warehouse', t: 'Свои склады' },
+                { icon: 'Headset', t: 'Поддержка 24/7' },
+              ].map((f) => (
+                <div key={f.t} className="flex items-center gap-3">
+                  <Icon name={f.icon} size={22} className="text-primary" />
+                  <span className="font-display uppercase tracking-wide text-sm">{f.t}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { v: '12', l: 'лет опыта' },
+              { v: '8 000', l: 'клиентов' },
+              { v: '40', l: 'регионов' },
+              { v: '99%', l: 'в срок' },
+            ].map((s) => (
+              <div key={s.l} className="flex flex-col justify-center border border-border bg-card p-8">
+                <div className="font-display text-4xl font-bold text-primary">{s.v}</div>
+                <div className="mt-2 uppercase tracking-wide text-muted-foreground text-sm">{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACTS */}
+      <section id="contacts" className="border-t border-border bg-card/40 py-24">
+        <div className="container">
+          <SectionTitle num="04" title="Контакты" subtitle="Свяжитесь с нами любым удобным способом" />
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {[
+              { icon: 'Phone', t: 'Телефон', v: '+7 (800) 555-35-35', s: 'Звонок бесплатный' },
+              { icon: 'Mail', t: 'Почта', v: 'zakaz@stroybaza.ru', s: 'Ответим в течение часа' },
+              { icon: 'MapPin', t: 'Адрес', v: 'г. Москва, Промзона 4', s: 'Пн–Сб 8:00–20:00' },
+            ].map((c) => (
+              <div key={c.t} className="border border-border bg-background p-8 hover-lift">
+                <Icon name={c.icon} size={26} className="text-primary" />
+                <h4 className="mt-5 font-display text-sm uppercase tracking-widest text-muted-foreground">{c.t}</h4>
+                <p className="mt-1 font-display text-xl">{c.v}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{c.s}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 flex flex-col items-center justify-between gap-6 border border-primary/40 bg-primary/5 p-10 text-center md:flex-row md:text-left">
+            <div>
+              <h3 className="font-display text-2xl uppercase tracking-wide">Нужна консультация?</h3>
+              <p className="mt-2 text-muted-foreground">Оставьте заявку — менеджер рассчитает стоимость и подберёт материалы.</p>
+            </div>
+            <Button size="lg" className="font-display text-base uppercase tracking-wide">
+              <Icon name="Send" size={18} className="mr-2" />
+              Оставить заявку
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="border-t border-border py-10">
+        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center bg-primary text-primary-foreground">
+              <Icon name="Hammer" size={16} />
+            </div>
+            <span className="font-display text-lg tracking-wider">СТРОЙБАЗА</span>
+          </div>
+          <p className="text-sm text-muted-foreground">© 2026 Стройбаза. Строительные материалы оптом и в розницу.</p>
+        </div>
+      </footer>
     </div>
   );
 };
+
+const SectionTitle = ({ num, title, subtitle }: { num: string; title: string; subtitle: string }) => (
+  <div>
+    <div className="flex items-center gap-4">
+      <span className="font-display text-sm text-primary tracking-widest">{num}</span>
+      <span className="h-px w-12 bg-primary" />
+      <h2 className="font-display text-4xl font-bold uppercase tracking-tight md:text-5xl">{title}</h2>
+    </div>
+    {subtitle && <p className="mt-3 text-muted-foreground">{subtitle}</p>}
+  </div>
+);
 
 export default Index;
