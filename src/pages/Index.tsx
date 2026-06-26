@@ -378,7 +378,7 @@ const Index = () => {
             {[
               { icon: 'Phone', t: 'Телефон', v: '+7 965 593-63-59', s: 'Османова Гульнур' },
               { icon: 'Mail', t: 'Почта', v: 'gz.osmanova@unistroyrf.ru', s: 'Ответим в течение часа' },
-              { icon: 'MapPin', t: 'Адрес', v: 'г. Москва, Промзона 4', s: 'Пн–Сб 8:00–20:00' },
+              { icon: 'MapPin', t: 'Адрес', v: 'г. Казань, ул. Ершова, 62', s: 'Пн–Сб 8:00–20:00' },
             ].map((c) => (
               <div key={c.t} className="border border-border bg-background p-8 hover-lift">
                 <Icon name={c.icon} size={26} className="text-primary" />
