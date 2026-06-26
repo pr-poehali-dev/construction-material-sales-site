@@ -32,6 +32,22 @@ const CATEGORIES = [
 ];
 const PROPERTIES = ['Морозостойкий', 'Влагостойкий', 'Огнеупорный', 'Сертифицирован'];
 
+const BASE = 'https://cdn.poehali.dev/projects/18457ce4-e852-4f5b-a062-6751e611250a/files/';
+const CAT_IMAGES: Record<string, string> = {
+  'Кабель': BASE + 'e4125c44-695d-4f74-b871-9e77a24fa526.jpg',
+  'Фасад': BASE + '20e3c65d-98b2-4aa0-9b9c-5bad2dbacedb.jpg',
+  'Облицовка': BASE + '421a61bd-8359-45c9-b5f7-7bac3d166bcc.jpg',
+  'Утеплитель': BASE + '3a998ffa-5270-4520-b831-7d3bffbe3015.jpg',
+  'Подсистема': BASE + '5d8622b1-82dd-4bc8-ac1d-7d347a65b686.jpg',
+  'Электрика и лотки': BASE + 'dd7dc330-a0f7-4070-9784-79d38de00bd5.jpg',
+  'Светильники': BASE + 'e3963edb-4a76-4d48-a955-fb2cd510c7ab.jpg',
+  'Керамогранит': BASE + '4e9782b3-086a-490b-af8b-e58f2aed7dcf.jpg',
+  'Лифты': BASE + 'c802ff0f-01de-4b74-89a9-dfdde6220cd6.jpg',
+  'Кодовые замки': BASE + '00ddee7e-3697-4428-ac56-1753deba2e60.jpg',
+  'Радиаторы': BASE + 'f11bfacc-b33d-4a24-9b26-8dc510e6f22e.jpg',
+  'Корзины для кондиционеров': BASE + '2e18cbfd-0a1c-4c2a-9427-be5b92f743f7.jpg',
+};
+
 type Product = {
   id: number;
   name: string;
@@ -247,8 +263,19 @@ const Index = () => {
                 <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                   {filtered.map((p) => (
                     <div key={p.id} className="hover-lift group flex flex-col border border-border bg-card animate-scale-in">
-                      <div className="relative flex h-36 items-center justify-center border-b border-border bg-secondary/40">
-                        <Icon name={p.icon} size={48} className="text-muted-foreground transition-colors group-hover:text-primary" />
+                      <div className="relative h-44 overflow-hidden border-b border-border bg-secondary/40">
+                        {CAT_IMAGES[p.category] ? (
+                          <img
+                            src={CAT_IMAGES[p.category]}
+                            alt={p.category}
+                            className="h-full w-full object-cover opacity-70 transition-all duration-500 group-hover:opacity-90 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="flex h-full items-center justify-center">
+                            <Icon name={p.icon} size={48} className="text-muted-foreground" />
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-card/60 to-transparent" />
                         <span className="absolute left-0 top-0 bg-primary px-2 py-1 font-display text-[10px] uppercase tracking-wider text-primary-foreground">
                           {p.category}
                         </span>
