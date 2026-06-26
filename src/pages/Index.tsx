@@ -289,13 +289,10 @@ const Index = () => {
                             </span>
                           ))}
                         </div>
-                        <div className="mt-auto flex items-end justify-between pt-5">
-                          <div>
-                            <div className="font-display text-2xl font-bold text-primary">{p.price.toLocaleString('ru-RU')} ₽</div>
-                            <div className="text-xs text-muted-foreground">за {p.unit}</div>
-                          </div>
-                          <Button size="icon" variant="secondary" className="hover:bg-primary hover:text-primary-foreground">
-                            <Icon name="ShoppingCart" size={18} />
+                        <div className="mt-auto pt-5">
+                          <Button variant="secondary" className="w-full hover:bg-primary hover:text-primary-foreground font-display uppercase tracking-wide text-sm">
+                            <Icon name="Phone" size={16} className="mr-2" />
+                            Узнать цену
                           </Button>
                         </div>
                       </div>
