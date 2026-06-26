@@ -154,12 +154,11 @@ const Index = () => {
           <div className="max-w-3xl animate-fade-in">
             <div className="mb-6 inline-flex items-center gap-2 border border-primary/40 bg-primary/10 px-4 py-1.5">
               <span className="h-2 w-2 animate-pulse bg-primary" />
-              <span className="font-display text-xs uppercase tracking-[0.2em] text-primary">Поставки по всей России</span>
+              <span className="font-display text-xs uppercase tracking-[0.2em] text-primary">Продажа только оптом · Поставки по всей России</span>
             </div>
             <h1 className="font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight md:text-7xl">
               Строительные <br />
-              материалы <span className="text-gradient-orange">оптом</span> <br />
-              и в розницу
+              материалы <span className="text-gradient-orange">оптом</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg text-muted-foreground">
               Кабель, фасадные системы, утеплитель, электрика, светильники, керамогранит, лифты и инженерное оборудование. Прямые поставки с заводов и доставка точно в срок.
