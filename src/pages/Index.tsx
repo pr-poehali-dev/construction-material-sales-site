@@ -45,7 +45,7 @@ const CAT_IMAGES: Record<string, string> = {
   'Лифты': BASE + 'c802ff0f-01de-4b74-89a9-dfdde6220cd6.jpg',
   'Кодовые замки': BASE + '00ddee7e-3697-4428-ac56-1753deba2e60.jpg',
   'Радиаторы': BASE + 'f11bfacc-b33d-4a24-9b26-8dc510e6f22e.jpg',
-  'Корзины для кондиционеров': BASE + '2e18cbfd-0a1c-4c2a-9427-be5b92f743f7.jpg',
+
 };
 
 type Product = {
