@@ -134,10 +134,12 @@ const Index = () => {
               </button>
             ))}
           </nav>
-          <Button onClick={() => scrollTo('contacts')} className="hidden font-display uppercase tracking-wide sm:flex">
-            <Icon name="Phone" size={16} className="mr-2" />
-            Заказать
-          </Button>
+          <a href="tel:+79655936359" className="hidden sm:flex">
+            <Button className="font-display uppercase tracking-wide">
+              <Icon name="Phone" size={16} className="mr-2" />
+              +7 965 593-63-59
+            </Button>
+          </a>
         </div>
       </header>
 
@@ -374,7 +376,7 @@ const Index = () => {
           <SectionTitle num="04" title="Контакты" subtitle="Свяжитесь с нами любым удобным способом" />
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {[
-              { icon: 'Phone', t: 'Телефон', v: '+7 (800) 555-35-35', s: 'Звонок бесплатный' },
+              { icon: 'Phone', t: 'Телефон', v: '+7 965 593-63-59', s: 'Османова Гульнур' },
               { icon: 'Mail', t: 'Почта', v: 'gz.osmanova@unistroyrf.ru', s: 'Ответим в течение часа' },
               { icon: 'MapPin', t: 'Адрес', v: 'г. Москва, Промзона 4', s: 'Пн–Сб 8:00–20:00' },
             ].map((c) => (
